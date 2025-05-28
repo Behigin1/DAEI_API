@@ -1,6 +1,6 @@
 {
-  "original_words": ["hola", "ayer", "día", "gato", "comida"],
-  "translated_words": ["hello", "yesterday", "day", "cat", "food"]
+  "colors_spanish": ["rojo", "azul", "verde", "amarillo"],
+  "colors_english": ["red", "blue", "green", "yellow"],
+  "animals_spanish": ["perro", "gato", "vaca", "pájaro"],
+  "animals_english": ["dog", "cat", "cow", "bird"]
 }
-
-
