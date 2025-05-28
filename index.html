@@ -1,23 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Spanish-English Quiz</title>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multi-Category Quiz</title>
+  <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
   <div class="quiz-container">
     <h1>¿Cómo se dice... en inglés?</h1>
-    <div id="question-container">
-      <p id="question">Cargando pregunta...</p>
+
+    <label for="category-select">Selecciona una categoría:</label>
+    <select id="category-select"></select>
+    <button id="start-btn">Comenzar</button>
+
+    <div id="question-section" style="display: none;">
+      <p id="question">Pregunta...</p>
       <ul id="choices"></ul>
+      <button id="next-btn" disabled>Siguiente</button>
+      <p id="score"></p>
     </div>
-    <button id="next-btn" disabled>Siguiente</button>
-    <p id="score"></p>
   </div>
 
   <script src="script.js"></script>
 </body>
 </html>
-
