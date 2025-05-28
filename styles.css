@@ -53,3 +53,9 @@ button.choice:hover {
 .incorrect {
   background-color: #f7c5c5 !important;
 }
+
+select, button {
+  padding: 10px;
+  margin-top: 10px;
+  font-size: 1em;
+}
