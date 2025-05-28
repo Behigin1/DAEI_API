@@ -1,9 +1,0 @@
-url_1 = www.google.com
-url_2 = www.instagram.com
-
-font = Arial
-size = 18
-type = bold
-color_1 = red
-color_2 = green
-
