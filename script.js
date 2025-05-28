@@ -1,30 +1,58 @@
-let currentQuestionIndex = 0;
+let currentIndex = 0;
 let score = 0;
-let questions = [];
+let originalWords = [];
+let translatedWords = [];
 
 const questionEl = document.getElementById("question");
 const choicesEl = document.getElementById("choices");
 const nextBtn = document.getElementById("next-btn");
 const scoreEl = document.getElementById("score");
 
-async function loadQuestions() {
-  const response = await fetch('questions.json');
-  questions = await response.json();
+async function loadWords() {
+  const response = await fetch('words.json');
+  const data = await response.json();
+  originalWords = data.original_words;
+  translatedWords = data.translated_words;
+
+  shuffleWordPairs();
   showQuestion();
+}
+
+// Shuffle the indices to present words in random order
+let wordOrder = [];
+function shuffleWordPairs() {
+  wordOrder = [...Array(originalWords.length).keys()];
+  for (let i = wordOrder.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [wordOrder[i], wordOrder[j]] = [wordOrder[j], wordOrder[i]];
+  }
 }
 
 function showQuestion() {
   nextBtn.disabled = true;
-  const current = questions[currentQuestionIndex];
-  questionEl.textContent = current.question;
+  const wordIndex = wordOrder[currentIndex];
+  const original = originalWords[wordIndex];
+  const correctAnswer = translatedWords[wordIndex];
+
+  questionEl.textContent = `¿Cómo se dice "${original}" en inglés?`;
+
+  // Generate options: correct answer + random others
+  const options = new Set();
+  options.add(correctAnswer);
+  while (options.size < 4) {
+    const random = translatedWords[Math.floor(Math.random() * translatedWords.length)];
+    options.add(random);
+  }
+
+  const shuffledOptions = Array.from(options).sort(() => Math.random() - 0.5);
   choicesEl.innerHTML = '';
 
-  current.choices.forEach(choice => {
+  shuffledOptions.forEach(option => {
     const li = document.createElement('li');
     const btn = document.createElement('button');
     btn.classList.add('choice');
-    btn.textContent = choice;
-    btn.onclick = () => selectAnswer(btn, current.answer);
+    btn.textContent = option;
+    btn.onclick = () => selectAnswer(btn, correctAnswer);
     li.appendChild(btn);
     choicesEl.appendChild(li);
   });
@@ -44,12 +72,13 @@ function selectAnswer(button, correctAnswer) {
   if (button.textContent === correctAnswer) {
     score++;
   }
+
   nextBtn.disabled = false;
 }
 
 nextBtn.addEventListener('click', () => {
-  currentQuestionIndex++;
-  if (currentQuestionIndex < questions.length) {
+  currentIndex++;
+  if (currentIndex < originalWords.length) {
     showQuestion();
   } else {
     showScore();
@@ -57,10 +86,10 @@ nextBtn.addEventListener('click', () => {
 });
 
 function showScore() {
-  questionEl.textContent = "Quiz Completed!";
+  questionEl.textContent = "¡Quiz finalizado!";
   choicesEl.innerHTML = '';
   nextBtn.style.display = 'none';
-  scoreEl.textContent = `Your Score: ${score} / ${questions.length}`;
+  scoreEl.textContent = `Puntaje: ${score} de ${originalWords.length}`;
 }
 
-loadQuestions();
+loadWords();
