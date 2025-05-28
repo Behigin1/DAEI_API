@@ -1,8 +1,13 @@
-let currentIndex = 0;
-let score = 0;
+let data = {};
 let originalWords = [];
 let translatedWords = [];
+let wordOrder = [];
+let currentIndex = 0;
+let score = 0;
 
+const categorySelect = document.getElementById("category-select");
+const startBtn = document.getElementById("start-btn");
+const questionSection = document.getElementById("question-section");
 const questionEl = document.getElementById("question");
 const choicesEl = document.getElementById("choices");
 const nextBtn = document.getElementById("next-btn");
@@ -10,16 +15,37 @@ const scoreEl = document.getElementById("score");
 
 async function loadWords() {
   const response = await fetch('words.json');
-  const data = await response.json();
-  originalWords = data.original_words;
-  translatedWords = data.translated_words;
+  data = await response.json();
 
-  shuffleWordPairs();
-  showQuestion();
+  // Populate dropdown
+  categorySelect.innerHTML = '';
+  for (let key in data) {
+    if (key.endsWith("_spanish")) {
+      const categoryName = key.replace("_spanish", "");
+      const option = document.createElement("option");
+      option.value = categoryName;
+      option.textContent = categoryName.charAt(0).toUpperCase() + categoryName.slice(1);
+      categorySelect.appendChild(option);
+    }
+  }
 }
 
-// Shuffle the indices to present words in random order
-let wordOrder = [];
+startBtn.addEventListener("click", () => {
+  const selectedCategory = categorySelect.value;
+  originalWords = data[`${selectedCategory}_spanish`];
+  translatedWords = data[`${selectedCategory}_english`];
+  if (!originalWords || !translatedWords) {
+    alert("Category data missing!");
+    return;
+  }
+  score = 0;
+  currentIndex = 0;
+  shuffleWordPairs();
+  showQuestion();
+  questionSection.style.display = "block";
+  scoreEl.textContent = '';
+});
+
 function shuffleWordPairs() {
   wordOrder = [...Array(originalWords.length).keys()];
   for (let i = wordOrder.length - 1; i > 0; i--) {
@@ -36,7 +62,7 @@ function showQuestion() {
 
   questionEl.textContent = `¿Cómo se dice "${original}" en inglés?`;
 
-  // Generate options: correct answer + random others
+  // Generate options
   const options = new Set();
   options.add(correctAnswer);
   while (options.size < 4) {
@@ -72,7 +98,6 @@ function selectAnswer(button, correctAnswer) {
   if (button.textContent === correctAnswer) {
     score++;
   }
-
   nextBtn.disabled = false;
 }
 
