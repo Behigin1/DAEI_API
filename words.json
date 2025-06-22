@@ -3,4 +3,6 @@
   "colors_english": ["red", "blue", "green", "yellow"],
   "animals_spanish": ["perro", "gato", "vaca", "pájaro"],
   "animals_english": ["dog", "cat", "cow", "bird"]
+  "phrases_spanish":["Lo siento", "Tengo hambre", "Tengo sed", "Abre la puerta", "Disculpa", "Espera", "No sé", "Vámonos", "Nos vemos", "Cuidado", "No te vayas", "Relájate", "¿Qué pasó?", "No entiendo", "Ayúdame", "¿Listo?", "Haz silencio", "Ve despacio", "Gira a la izquierda",  "Gira a la derecha", "Ven aquí", "¿Puedes repetir?", "Me gusta", "Estoy cansado", "Espera aquí", "Juguemos", "Buena suerte", "Habla más fuerte", "Regresa", "Estoy perdido"],
+  "phrases_english":["I’m sorry", "I’m hungry", "I’m thirsty", "Open the door", "Excuse me", "Wait", "I don’t know", "Let’s go", "See you", "Be careful", "Don’t go", "Chill out", "What happened?", "I don’t understand", "Help me", "Ready?", "Be quiet", "Slow down", "Turn left", "Turn right", "Come here", "Can you repeat?", "I like it", "I’m tired", "Wait here", "Let’s play", "Good luck", "Speak up", "Come back", "I’m lost"],
 }
